@@ -1,0 +1,75 @@
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+}
+
+android {
+    namespace 'com.ya.function'
+    compileSdk rootProject.ext.android.compileSdkVersion
+
+    defaultConfig {
+        minSdk rootProject.ext.android.minSdkVersion
+        targetSdk rootProject.ext.android.targetSdkVersion
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dependencies {
+
+    implementation(
+            rootProject.ext.deps.constraint,
+            rootProject.ext.deps.appcompat,
+            rootProject.ext.deps.design,
+            rootProject.ext.deps.core,
+    )
+
+    // rxJava
+    api "io.reactivex.rxjava2:rxjava:$rootProject.dependent.rxjavaVersion"
+    // rxAndroid
+    api ("io.reactivex.rxjava2:rxandroid:$rootProject.dependent.rxandroidVersion"){
+        exclude group: 'io.reactivex.rxjava2'
+    }
+    // gson
+    api "com.google.code.gson:gson:$rootProject.dependent.gsonVersion"
+
+    api "com.squareup.okhttp3:okhttp:$rootProject.dependent.okhttpVersion"
+
+    api ("com.squareup.retrofit2:retrofit:$rootProject.dependent.retrofitVersion"){
+        exclude group: 'com.squareup.okhttp3'
+    }
+
+    implementation('com.github.ihsanbal:LoggingInterceptor:3.1.0') {
+        exclude group: 'org.json', module: 'json'
+    }
+
+    api("com.squareup.retrofit2:converter-gson:$rootProject.dependent.retrofitVersion"){
+        exclude group: 'com.google.code.gson'
+        exclude group: 'com.squareup.retrofit2'
+    }
+
+    api ("com.squareup.retrofit2:converter-scalars:$rootProject.dependent.retrofitVersion"){
+        exclude group: 'com.google.code.gson'
+        exclude group: 'com.squareup.retrofit2'
+    }
+
+    api ("com.squareup.retrofit2:adapter-rxjava2:$rootProject.dependent.retrofitVersion"){
+        exclude group: 'com.squareup.retrofit2'
+        exclude group: 'io.reactivex.rxjava2'
+    }
+}

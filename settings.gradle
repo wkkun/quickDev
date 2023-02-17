@@ -1,0 +1,35 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        google()
+        mavenCentral()
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+rootProject.name = "BaseQuick"
+include ':app'
+
+private includeDir(String dirName) {
+    file(dirName).eachDir { dir ->
+        File[] files = dir.listFiles(new FilenameFilter() {
+            @Override
+            boolean accept(File file, String name) {
+                return name.equalsIgnoreCase("build.gradle")
+            }
+        })
+        if (files.length > 0) {
+            include dir.name
+            project(":${dir.name}").projectDir = dir
+        }
+    }
+}
+includeDir('base')
+
+include ':WebView'
+project(':WebView').projectDir = new File('attach/WebView')

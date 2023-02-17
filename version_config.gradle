@@ -1,0 +1,29 @@
+ext {
+
+    gson_version = '2.10'
+    android = [
+            compileSdkVersion: 32,
+            buildToolsVersion: "30.0.3",
+            minSdkVersion    : 23,
+            targetSdkVersion : 32,
+            versionCode      : 1,
+            versionName      : "1.0",]
+
+
+    deps = [
+            // ------------- Android -------------
+            appcompat       : 'androidx.appcompat:appcompat:1.5.1',
+            design          : 'com.google.android.material:material:1.7.0',
+            constraint      : 'androidx.constraintlayout:constraintlayout:2.1.4',
+            viewpager2      : 'androidx.viewpager2:viewpager2:1.0.0',
+            core            : 'androidx.core:core:1.7.0',
+    ]
+
+    dependent = [
+            gsonVersion         : "2.8.5",
+            rxjavaVersion       : "2.2.7",
+            rxandroidVersion    : "2.1.1",
+            okhttpVersion       : "4.7.0",
+            retrofitVersion     : "2.5.0",
+    ]
+}
