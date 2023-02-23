@@ -4,12 +4,12 @@ plugins {
 }
 
 android {
-    namespace 'com.ya.webview'
-    compileSdk 32
+    namespace 'com.ya.basenet'
+    compileSdk rootProject.ext.android.compileSdkVersion
 
     defaultConfig {
-        minSdk 23
-        targetSdk 32
+        minSdk rootProject.ext.android.minSdkVersion
+        targetSdk rootProject.ext.android.targetSdkVersion
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -31,6 +31,7 @@ android {
 }
 
 dependencies {
+
 
     implementation(
             rootProject.ext.deps.constraint,

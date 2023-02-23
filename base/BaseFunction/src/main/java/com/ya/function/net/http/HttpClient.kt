@@ -1,6 +1,6 @@
 package com.ya.function.net.http
 
-import com.fenzotech.hitup.net.IClient
+import com.ya.function.net.IClient
 import com.ya.function.net.http.service.DownloadService
 import okhttp3.Request
 

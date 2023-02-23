@@ -37,5 +37,6 @@ dependencies {
             rootProject.ext.deps.appcompat,
             rootProject.ext.deps.design,
             rootProject.ext.deps.core,
+            rootProject.ext.deps.coreKtx,
     )
 }

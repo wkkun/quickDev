@@ -37,6 +37,7 @@ dependencies {
             rootProject.ext.deps.appcompat,
             rootProject.ext.deps.design,
             rootProject.ext.deps.core,
+            rootProject.ext.deps.coreKtx,
     )
-    implementation "com.google.code.gson:gson:${gson_version}"
+    implementation "com.google.code.gson:gson:$rootProject.dependent.gsonVersion"
 }

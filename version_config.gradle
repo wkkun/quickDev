@@ -1,29 +1,61 @@
 ext {
-
     gson_version = '2.10'
     android = [
-            compileSdkVersion: 32,
+            compileSdkVersion: 33,
             buildToolsVersion: "30.0.3",
             minSdkVersion    : 23,
-            targetSdkVersion : 32,
-            versionCode      : 1,
-            versionName      : "1.0",]
+            targetSdkVersion : 33,
+            versionCode      : getAppVersionCode(),
+            versionName      : getAppVersionName(),]
 
 
     deps = [
             // ------------- Android -------------
-            appcompat       : 'androidx.appcompat:appcompat:1.5.1',
-            design          : 'com.google.android.material:material:1.7.0',
-            constraint      : 'androidx.constraintlayout:constraintlayout:2.1.4',
-            viewpager2      : 'androidx.viewpager2:viewpager2:1.0.0',
-            core            : 'androidx.core:core:1.7.0',
+            appcompat : 'androidx.appcompat:appcompat:1.5.1',
+            design    : 'com.google.android.material:material:1.7.0',
+            constraint: 'androidx.constraintlayout:constraintlayout:2.1.4',
+            viewpager2: 'androidx.viewpager2:viewpager2:1.0.0',
+            core      : 'androidx.core:core:1.9.0',
+            coreKtx   : 'androidx.core:core-ktx:1.9.0'
     ]
 
     dependent = [
-            gsonVersion         : "2.8.5",
-            rxjavaVersion       : "2.2.7",
-            rxandroidVersion    : "2.1.1",
-            okhttpVersion       : "4.7.0",
-            retrofitVersion     : "2.5.0",
+            gsonVersion     : "2.10.1",
+            rxjavaVersion   : "3.1.6",
+            rxandroidVersion: "3.0.2",
+            okhttpVersion   : "4.10.0",
+            retrofitVersion : "2.9.0",
+            startupVersion  : "1.1.1",
     ]
+}
+
+@SuppressWarnings("all")
+String getAppVersionName() {
+    if (OVERRIDE_VERSION_NAME != null && OVERRIDE_VERSION_NAME.toString().matches("(\\d+\\.){2}(\\d){2}")) {
+        return OVERRIDE_VERSION_NAME.toString().trim()
+    } else {
+        return VERSION_NAME
+    }
+}
+
+@SuppressWarnings("all")
+boolean check(int code) {
+    return code >= 0 && code <= 99
+}
+
+@SuppressWarnings("all")
+int getAppVersionCode() {
+    def (major, minor, patch) = getAppVersionName().trim().tokenize('.')
+    println("getAppVersionCode major $major minor $minor patch $patch")
+    (major, minor, patch) = [major, minor, patch].collect { it.toInteger() }
+    if (!check(major) || !check(minor) || !check(patch)) {
+        throw IllegalArgumentException("请确认此次版本号是否正确 ! 应该是00.00.00的格式")
+    }
+    //suka 目前的版本是17
+    def versionCode = (major * 10000) + (minor * 100) + (patch)
+    println("getAppVersionCode $versionCode")
+    if (versionCode >= 2100000000) {
+        throw IllegalArgumentException("请确认此次版本号是否正确 ! google play的版本号最大限制为 2100000000")
+    }
+    return versionCode
 }

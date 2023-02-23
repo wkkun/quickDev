@@ -1,6 +1,6 @@
 package com.ya.function.net.http
 
-import com.fenzotech.hitup.net.IClientFactory
+import com.ya.function.net.IClientFactory
 
 /**
  *author: Bai

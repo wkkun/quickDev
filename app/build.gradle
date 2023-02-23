@@ -17,18 +17,83 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
     kotlinOptions {
         jvmTarget = '1.8'
+    }
+
+    signingConfigs {
+        debug {
+            Properties properties = new Properties()
+            properties.load(new FileInputStream(file(SIGNING_CONFIGS_PATH)))
+            keyAlias properties.getProperty("DEBUG_KEY_ALIAS")
+            keyPassword properties.getProperty("DEBUG_KEY_PASSWORD")
+            storeFile file(properties.getProperty("DEBUG_STORE_FILE"))
+            storePassword properties.getProperty("DEBUG_STORE_PASSWORD")
+            v1SigningEnabled true
+            v2SigningEnabled true
+        }
+        release {
+            Properties properties = new Properties()
+            properties.load(new FileInputStream(file(SIGNING_CONFIGS_PATH)))
+            keyAlias properties.getProperty("RELEASE_KEY_ALIAS")
+            keyPassword properties.getProperty("RELEASE_KEY_PASSWORD")
+            storeFile file(properties.getProperty("RELEASE_STORE_FILE"))
+            storePassword properties.getProperty("RELEASE_STORE_PASSWORD")
+            v1SigningEnabled true
+            v2SigningEnabled true
+        }
+    }
+
+    buildTypes {
+        debug {
+            shrinkResources false
+            zipAlignEnabled false
+            minifyEnabled DEBUG_MINIFY_ENABLED.toBoolean()
+            signingConfig signingConfigs.debug
+            jniDebuggable false
+            crunchPngs false
+            project.gradle.startParameter.excludedTaskNames.add('lint')  // 屏蔽lint耗时检查
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+        }
+
+        release {
+            shrinkResources RELEASE_MINIFY_ENABLED.toBoolean()
+            zipAlignEnabled true
+            minifyEnabled RELEASE_MINIFY_ENABLED.toBoolean()
+
+            signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+//            firebaseCrashlytics {
+//                //是否上传混淆映射文件和 是否混淆保持一致
+//                mappingFileUploadEnabled MINIFY_ENABLED.toBoolean()
+//            }
+        }
+
+//        android.applicationVariants.all { variant ->
+//            def host = SERVER_HOST
+////            if(!USE_NEW.toBoolean()){
+//            variant.outputs.all { output ->
+//                def archBuildType
+//                if (output.apkData.fullName.startsWith("arm") || output.apkData.fullName.startsWith("universal")) {
+//                    archBuildType = output.apkData.fullName
+//                } else {
+//                    archBuildType = "${APK_ARCH.toString()}${variant.buildType.name.capitalize()}"
+//                }
+//                output.versionCodeOverride = rootProject.ext.android.versionCode
+//                if (BRANCH instanceof String) {
+//                    def branch = BRANCH.substring(BRANCH.lastIndexOf("/") + 1, BRANCH.length())
+//                    outputFileName = "${host}-${variant.versionName}-${output.versionCodeOverride}-${archBuildType}-${branch}.apk"
+//                } else {
+//                    outputFileName = "${host}-${variant.versionName}-${output.versionCodeOverride}-${archBuildType}.apk"
+//                }
+//            }
+//        }
     }
 }
 
@@ -38,6 +103,7 @@ dependencies {
             rootProject.ext.deps.appcompat,
             rootProject.ext.deps.design,
             rootProject.ext.deps.core,
+            rootProject.ext.deps.coreKtx,
     )
 
     implementation 'androidx.multidex:multidex:2.0.1'

@@ -1,4 +1,4 @@
-package com.fenzotech.hitup.net
+package com.ya.function.net
 
 /**
  *author: Bai
