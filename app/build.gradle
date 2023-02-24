@@ -106,5 +106,11 @@ dependencies {
             rootProject.ext.deps.coreKtx,
     )
 
+    implementation(
+            rootProject.ext.modelue.BaseUi,
+            rootProject.ext.modelue.BaseUtil,
+            rootProject.ext.modelue.BaseFunction,
+    )
+
     implementation 'androidx.multidex:multidex:2.0.1'
 }

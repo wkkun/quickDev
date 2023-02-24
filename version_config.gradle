@@ -24,8 +24,16 @@ ext {
             rxjavaVersion   : "3.1.6",
             rxandroidVersion: "3.0.2",
             okhttpVersion   : "4.10.0",
+            okhttpLogVersion   : "4.9.1",
             retrofitVersion : "2.9.0",
             startupVersion  : "1.1.1",
+            glideVersion  : "4.11.0",
+    ]
+
+    modelue = [
+            BaseUi  : project(":BaseUi"),
+            BaseUtil: project(":BaseUtil"),
+            BaseFunction: project(":BaseFunction"),
     ]
 }
 
